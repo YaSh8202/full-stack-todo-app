@@ -7,7 +7,7 @@ const combinedReducer = combineReducers({
 });
 
 export const makeStore = () => {
-  configureStore({
+  return configureStore({
     reducer: combinedReducer,
   });
 };
