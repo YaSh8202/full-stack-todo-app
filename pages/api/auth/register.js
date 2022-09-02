@@ -1,11 +1,11 @@
 import connectMongo from "../../../utils/connectMongo";
-import Student from "../../../models/Student";
+import Student from "../../../models/user";
 import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
-  const { email, firstName, lastName, password, confirmPassword } = req.body;
+  const { email, name, password, confirmPassword } = req.body;
 
-  if (!email || !firstName || !lastName || !password) {
+  if (!email || !name || !password) {
     return res.status(400).json({
       error: "Please provide all the required fields",
     });
@@ -28,13 +28,12 @@ export default async function handler(req, res) {
       });
     }
 
-    const name = firstName + " " + lastName;
     const student = new Student({ email, name, password });
     await student.save();
     const token = jwt.sign({ id: student._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.status(200).json({ student, token });
+    res.status(200).json({ user: student, token });
   } catch (err) {
     console.log(err);
     res.status(500).json({

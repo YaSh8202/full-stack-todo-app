@@ -1,5 +1,5 @@
 import connectMongo from "../../../utils/connectMongo";
-import Student from "../../../models/Student";
+import Student from "../../../models/user";
 import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    res.status(200).json({ student: existingStudent, token });
+    res.status(200).json({ user: existingStudent, token });
   } catch (err) {
     console.log(err);
     return res.status(500).json({
