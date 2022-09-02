@@ -22,7 +22,7 @@ const CreateTodo = () => {
           className=" bg-transparent text-sm pl-2 placeholder:text-sm my-auto placeholder:text-darkGrayishBlue text-veryDarkBlue outline-none lg:text-lg w-full"
           placeholder="Create a new todo..."
         />
-        <button onClick={() => console.log(todo)} type="submit"></button>
+        <button onClick={submitHandler} type="submit"></button>
       </label>
     </form>
   );

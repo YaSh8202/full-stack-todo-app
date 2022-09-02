@@ -13,8 +13,10 @@ export default async function handler(req, res) {
   try {
     await connectMongo();
     let existingStudent = await Student.findOne({ email: email });
-    if (!existingStudent)
-      res.status(400).json({ error: "Student does not exist" });
+    if (!existingStudent) {
+      res.status(400).json({ error: "User does not exist" });
+      return;
+    }
 
     await existingStudent.comparePassword(password);
 

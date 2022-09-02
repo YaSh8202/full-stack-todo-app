@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
     if (existingStudent) {
       return res.status(400).json({
-        error: "Student already exists",
+        error: "Email already exists",
       });
     }
 

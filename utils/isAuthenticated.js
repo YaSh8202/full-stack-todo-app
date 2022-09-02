@@ -1,7 +1,8 @@
 import { decode } from "jsonwebtoken";
 
 export default function isAuthenticated() {
-  const token = localStorage.getItem("token");
+  const token = JSON.parse(localStorage.getItem("user"))?.token;
+
   try {
     // decode(token);
     const { exp } = decode(token);

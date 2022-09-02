@@ -1,19 +1,21 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetError } from "../store/authSlice";
 import isAuthenticated from "../utils/isAuthenticated";
 import LoadingSpinner from "./LoadingSpinner";
 
 const Auth = ({ isSignup, onSubmit }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const token = useSelector((state) => state.auth.token);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const error = useSelector((state) => state.auth.error);
   useEffect(() => {
     setLoading(true);
     if (isAuthenticated()) {
@@ -21,6 +23,10 @@ const Auth = ({ isSignup, onSubmit }) => {
     }
     setLoading(false);
   }, [router, token]);
+
+  useEffect(() => {
+    dispatch(resetError());
+  }, [dispatch]);
 
   if (loading) {
     return (
@@ -37,12 +43,11 @@ const Auth = ({ isSignup, onSubmit }) => {
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit({ name, email, password, confirmPassword });
-        localStorage.setItem("token", token);
       }}
-      className="bg-grey-lighter h-full flex flex-col mt-6"
+      className=" h-full flex flex-col mt-6"
     >
-      <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-        <div className="bg-white dark:bg-veryDarkDesaturatedBlue px-6 py-8 rounded shadow-md text-black w-full">
+      <div className=" container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+        <div className="bg-white dark:bg-veryDarkDesaturatedBlue px-6 py-8 rounded shadow-md text-black w-full pb-4">
           <h1 className="mb-8 dark:text-veryLightGray text-3xl text-center text-veryDarkBlue ">
             {`${isSignup ? "Sign up" : "Sign in"}`}
           </h1>
@@ -94,8 +99,8 @@ const Auth = ({ isSignup, onSubmit }) => {
           >
             {`${isSignup ? "Create Account" : "Continue"}`}
           </button>
+          <div className=" font-sm mt-1 pt-1 text-red-500">{error}</div>
         </div>
-
         <div className="text-veryDarkBlue dark:text-lightGrayishBlue mt-6">
           {`${
             isSignup ? "Already have an account? " : "Don't have an account? "
