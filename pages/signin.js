@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import Auth from "../components/Auth";
 import { auth, setError } from "../store/authSlice";
 import cookieCutter from "cookie-cutter";
+import Head from "next/head";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,14 @@ const Signin = () => {
       });
   };
 
-  return <Auth onSubmit={onSignin} isSignup={false} />;
+  return (
+    <>
+      <Head>
+        <title>Signin</title>
+      </Head>
+      <Auth onSubmit={onSignin} isSignup={false} />;
+    </>
+  );
 };
 
 export default Signin;

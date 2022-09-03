@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Auth from "../components/Auth";
 import { auth, setError } from "../store/authSlice";
 import cookieCutter from "cookie-cutter";
+import Head from "next/head";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,14 @@ const Register = () => {
       });
   };
 
-  return <Auth onSubmit={onRegister} isSignup={true} />;
+  return (
+    <>
+      <Head>
+        <title>Register</title>
+      </Head>
+      <Auth onSubmit={onRegister} isSignup={true} />
+    </>
+  );
 };
 
 export default Register;
