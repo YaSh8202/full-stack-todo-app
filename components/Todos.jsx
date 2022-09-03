@@ -43,16 +43,6 @@ const Todos = () => {
     }
   };
 
-  if (allTodos.length === 0) {
-    return (
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <h1 className="text-veryDarkGrayishBlue dark:text-white text-2xl font-bold mt-4">
-          No todos here
-        </h1>
-      </div>
-    );
-  }
-
   function handleOnDragEnd(result) {
     if (!result.destination) return;
     const items = Array.from(todos);
@@ -71,32 +61,36 @@ const Todos = () => {
               {...provided.droppableProps}
               className="todos max-h-[40vh] md:max-h-[55vh] scrollbar-hide overflow-auto rounded-t "
             >
-              {todos
-                ? todos.map((todo, index) => (
-                    <Draggable
-                      draggableId={todo._id}
-                      index={index}
-                      key={todo._id}
-                    >
-                      {(provided) => (
-                        <li
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                        >
-                          <Todo todo={todo} />
-                        </li>
-                      )}
-                    </Draggable>
-                  ))
-                : null}
+              {todos.length > 0 ? (
+                todos.map((todo, index) => (
+                  <Draggable
+                    draggableId={todo._id}
+                    index={index}
+                    key={todo._id}
+                  >
+                    {(provided) => (
+                      <li
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                      >
+                        <Todo todo={todo} />
+                      </li>
+                    )}
+                  </Draggable>
+                ))
+              ) : (
+                <h1 className="text-veryDarkGrayishBlue text-center bg-white dark:text-veryLightGrayishBlue text-2xl font-bold py-2 rounded-t mt-4 dark:bg-veryDarkDesaturatedBlue ">
+                  No todos here
+                </h1>
+              )}
               {provided.placeholder}
             </ul>
           )}
         </Droppable>
       </DragDropContext>
 
-      <div className="flex text-sm rounded  flex-row items-center h-12 md:h-14 px-4  bg-white dark:bg-veryDarkDesaturatedBlue justify-between ">
+      <div className="flex text-sm rounded-b  flex-row items-center h-12 md:h-14 px-4  bg-white dark:bg-veryDarkDesaturatedBlue justify-between ">
         <div className="text-gray-400 font-medium ">{`${
           allTodos.filter((todo) => !todo.done).length
         } items left`}</div>
