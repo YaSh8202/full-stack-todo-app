@@ -8,7 +8,7 @@ const LoadingSpinner = (props) => (
     {...props}
   >
     <circle
-      fill="black"
+      fill="hsl(220, 98%, 61%)"
       stroke="#fff"
       strokeWidth={6}
       strokeMiterlimit={15}

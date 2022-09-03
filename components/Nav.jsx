@@ -6,8 +6,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authSlice";
 
-function Nav() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+function Nav({ isDarkMode, setIsDarkMode }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const token = useSelector((state) => state.auth.token);
@@ -53,7 +52,7 @@ function Nav() {
             width={30}
             alt="darkModeToggler"
             layout="responsive"
-            className=" group-hover:animate-spin"
+            className={` ${isDarkMode ? "md:group-hover:animate-spin  " : ""}`}
           />
         </button>
         {token && (
