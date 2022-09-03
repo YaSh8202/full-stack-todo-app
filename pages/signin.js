@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Auth from "../components/Auth";
 import { auth, setError } from "../store/authSlice";
+import cookieCutter from "cookie-cutter";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,9 @@ const Signin = () => {
       .then((res) => {
         dispatch(auth(res.data));
         localStorage.setItem("user", JSON.stringify(res.data));
+        cookieCutter.set("oursitejwt", res.data.token, {
+          maxAge: 60 * 60 * 24 * 7,
+        });
       })
       .catch((err) => {
         console.log(err);
