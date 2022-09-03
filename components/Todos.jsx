@@ -3,6 +3,7 @@ import Todo from "./Todo";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllTodos } from "../store/todoSlice";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const Todos = () => {
   const allTodos = useSelector((state) => state.todos.todos);
@@ -52,16 +53,52 @@ const Todos = () => {
     );
   }
 
+  function handleOnDragEnd(result) {
+    if (!result.destination) return;
+    const items = Array.from(todos);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setTodos(items);
+  }
+
   return (
     <div className=" w-full   mt-5 rounded  font-medium ">
-      <div className="max-h-[21rem] md:max-h-[30rem] scrollbar-hide overflow-auto rounded-t ">
-        {todos
-          ? todos.map((todo) => <Todo key={todo._id} todo={todo} />)
-          : null}
-      </div>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="todos">
+          {(provided) => (
+            <ul
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className="todos max-h-[40vh] md:max-h-[55vh] scrollbar-hide overflow-auto rounded-t "
+            >
+              {todos
+                ? todos.map((todo, index) => (
+                    <Draggable
+                      draggableId={todo._id}
+                      index={index}
+                      key={todo._id}
+                    >
+                      {(provided) => (
+                        <li
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                        >
+                          <Todo todo={todo} />
+                        </li>
+                      )}
+                    </Draggable>
+                  ))
+                : null}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
+
       <div className="flex text-sm rounded  flex-row items-center h-12 md:h-14 px-4  bg-white dark:bg-veryDarkDesaturatedBlue justify-between ">
         <div className="text-gray-400 font-medium ">{`${
-          allTodos.filter((todo) => todo.done).length
+          allTodos.filter((todo) => !todo.done).length
         } items left`}</div>
         <div className=" items-center gap-3 hidden sm:flex child-hover:text-veryDarkGrayishBlue ">
           {categories.map((cat) => (
@@ -96,6 +133,9 @@ const Todos = () => {
           </button>
         ))}
       </div>
+      <p className="text-center text-sm mt-7 text-darkGrayishBlue">
+        Drag and drop to reorder list
+      </p>
     </div>
   );
 };

@@ -29,7 +29,7 @@ function Nav({ isDarkMode, setIsDarkMode }) {
       root.classList.add(theme);
       setIsDarkMode(true);
     }
-  }, []);
+  }, [setIsDarkMode]);
 
   const signoutHandler = () => {
     localStorage.removeItem("user");

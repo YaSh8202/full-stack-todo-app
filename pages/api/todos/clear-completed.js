@@ -16,7 +16,6 @@ export default async function handler(req, res) {
       await Todo.find({ userId, done: true }).deleteMany();
 
       const todos = await Todo.find({ userId });
-      console.log(todos);
 
       return res.status(200).json({ todos });
     } catch (err) {
