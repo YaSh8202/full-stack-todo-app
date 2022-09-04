@@ -15,7 +15,8 @@ const Register = () => {
         dispatch(auth(res.data));
         localStorage.setItem("user", JSON.stringify(res.data));
         cookieCutter.set("oursitejwt", res.data.token, {
-          maxAge: 60 * 60 * 24 * 7,
+          maxAge: 60 * 60 * 24 * 1000, // 1 day
+          expires: new Date(Date.now() + 60 * 60 * 24), // 1 day
         });
       })
       .catch((err) => {

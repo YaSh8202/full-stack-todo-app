@@ -80,9 +80,7 @@ const Todos = () => {
                   </Draggable>
                 ))
               ) : (
-                <h1 className="text-veryDarkGrayishBlue text-center bg-white dark:text-veryLightGrayishBlue text-2xl font-bold py-2 rounded-t mt-4 dark:bg-veryDarkDesaturatedBlue ">
-                  No todos here
-                </h1>
+                <Todo todo={{ title: "No Todos here", done: false }} />
               )}
               {provided.placeholder}
             </ul>

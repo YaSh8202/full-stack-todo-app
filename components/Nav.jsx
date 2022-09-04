@@ -2,9 +2,9 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import { useEffect } from "react";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authSlice";
+import cookieCutter from "cookie-cutter";
 
 function Nav({ isDarkMode, setIsDarkMode }) {
   const dispatch = useDispatch();
@@ -33,6 +33,9 @@ function Nav({ isDarkMode, setIsDarkMode }) {
 
   const signoutHandler = () => {
     localStorage.removeItem("user");
+    cookieCutter.set("oursitejwt", "", {
+      expires: new Date(0),
+    });
     dispatch(logout);
     router.push("/signin");
   };

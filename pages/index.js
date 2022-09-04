@@ -34,7 +34,7 @@ export default function Home() {
   }
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden  ">
       <Head>
         <title>Todo App</title>
         <meta

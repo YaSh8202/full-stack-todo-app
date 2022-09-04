@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const student = new Student({ email, name, password });
     await student.save();
     const token = jwt.sign({ id: student._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
     res.status(200).json({ user: student, token });
   } catch (err) {

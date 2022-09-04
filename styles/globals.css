@@ -8,4 +8,7 @@
   html {
     font-family: Josefin Sans, system-ui, sans-serif;
   }
+  body {
+    @apply bg-veryLightGray dark:bg-veryDarkDesaturatedBlue;
+  }
 }
