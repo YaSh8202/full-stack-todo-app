@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         id: existingStudent._id,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "24h" }
+      { expiresIn: "23h" }
     );
     res.status(200).json({ user: existingStudent, token });
   } catch (err) {
