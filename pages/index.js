@@ -24,13 +24,7 @@ export default function Home() {
   }, [router, dispatch]);
 
   if (loading) {
-    return (
-      <div className=" h-full mt-[18rem]  flex items-center justify-center">
-        <div className="h-10 w-10 md:h-16 md:w-16 ">
-          <LoadingSpinner />
-        </div>
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
